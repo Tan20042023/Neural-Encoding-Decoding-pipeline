@@ -16,6 +16,21 @@ from encoding_common.pipeline import create_or_load_split_indices, resize_movies
 from utils.metrics import keras_cc
 
 
+def _get_tpu_strategy():
+    """Detect and initialize TPU. Returns (strategy, is_tpu)."""
+    try:
+        resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu="local")
+        tf.config.experimental_connect_to_cluster(resolver)
+        tf.tpu.experimental.initialize_tpu_system(resolver)
+        strategy = tf.distribute.TPUStrategy(resolver)
+        print(f"Running on TPU: {resolver.master()}")
+        print(f"Number of replicas: {strategy.num_replicas_in_sync}")
+        return strategy, True
+    except (ValueError, RuntimeError) as e:
+        print(f"TPU initialization failed ({e}), falling back to CPU/GPU")
+        return tf.distribute.get_strategy(), False
+
+
 def compute_mean_cc_numpy(y_true, y_pred):
     x = y_true - np.mean(y_true, axis=0, keepdims=True)
     y = y_pred - np.mean(y_pred, axis=0, keepdims=True)
@@ -151,19 +166,27 @@ def train_regularized_encoder(
     y_val_movie = x_val
     y_test_movie = x_test
 
-    encoder = CNN(inputs=Input(shape=(resolution, resolution, 1)), n_out=y_train_spike.shape[1])
-    decoder = load_model(sid_model_path, compile=False)
-    decoder.trainable = False
-    for layer in decoder.layers:
-        layer.trainable = False
+    strategy, is_tpu = _get_tpu_strategy()
 
-    regularized_model = DecoderRegularizedEncoder(
-        encoder=encoder,
-        decoder=decoder,
-        lambda_decode=lambda_decode,
-        lambda_ssim=lambda_ssim,
-    )
-    regularized_model.compile(optimizer=Adam(learning_rate=learning_rate))
+    with strategy.scope():
+        encoder = CNN(inputs=Input(shape=(resolution, resolution, 1)), n_out=y_train_spike.shape[1])
+        decoder = load_model(sid_model_path, compile=False)
+        decoder.trainable = False
+        for layer in decoder.layers:
+            layer.trainable = False
+
+        regularized_model = DecoderRegularizedEncoder(
+            encoder=encoder,
+            decoder=decoder,
+            lambda_decode=lambda_decode,
+            lambda_ssim=lambda_ssim,
+        )
+        regularized_model.compile(optimizer=Adam(learning_rate=learning_rate))
+
+    if is_tpu:
+        per_replica = batch_size // strategy.num_replicas_in_sync
+        batch_size = max(per_replica, 1) * strategy.num_replicas_in_sync
+        print(f"TPU batch size: {per_replica} per replica x {strategy.num_replicas_in_sync} replicas = {batch_size} effective")
     early_stop = EarlyStopping(
         monitor="val_total_loss",
         mode="min",

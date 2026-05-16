@@ -1,5 +1,6 @@
 import os
 
+import tensorflow as tf
 from tf_keras.callbacks import EarlyStopping, ModelCheckpoint
 from tf_keras.layers import Input
 from tf_keras.models import Model, load_model
@@ -10,6 +11,27 @@ from CNN.CNN import CNN
 from SID.SID import AE, cal_performance, dense_decoder
 from encoding_common.pipeline import save_json
 from utils.metrics import keras_cc
+
+_tpu_strategy = None
+
+
+def _get_tpu_strategy():
+    """Detect and initialize TPU. Returns (strategy, is_tpu). Cached after first call."""
+    global _tpu_strategy
+    if _tpu_strategy is not None:
+        return _tpu_strategy, True
+    try:
+        resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu="local")
+        tf.config.experimental_connect_to_cluster(resolver)
+        tf.tpu.experimental.initialize_tpu_system(resolver)
+        strategy = tf.distribute.TPUStrategy(resolver)
+        print(f"Running on TPU: {resolver.master()}")
+        print(f"Number of replicas: {strategy.num_replicas_in_sync}")
+        _tpu_strategy = strategy
+        return strategy, True
+    except (ValueError, RuntimeError) as e:
+        print(f"TPU initialization failed ({e}), falling back to CPU/GPU")
+        return tf.distribute.get_strategy(), False
 
 
 def build_decoder_model(n_cell, resolution, learning_rate):
@@ -44,8 +66,15 @@ def train_encoder(
     x_val = movie[val_idx]
     y_val = spike[val_idx]
 
-    encoder = CNN(inputs=Input(shape=movie.shape[1:]), n_out=spike.shape[1])
-    encoder.compile(optimizer=Adam(learning_rate=learning_rate), loss="poisson", metrics=["mse", keras_cc])
+    strategy, is_tpu = _get_tpu_strategy()
+
+    with strategy.scope():
+        encoder = CNN(inputs=Input(shape=movie.shape[1:]), n_out=spike.shape[1])
+        encoder.compile(optimizer=Adam(learning_rate=learning_rate), loss="poisson", metrics=["mse", keras_cc])
+
+    if is_tpu:
+        per_replica = batch_size // strategy.num_replicas_in_sync
+        batch_size = max(per_replica, 1) * strategy.num_replicas_in_sync
 
     best_path = os.path.join(output_dir, "best_model.keras")
     callbacks = [
@@ -87,11 +116,19 @@ def train_decoder(
     x_val = spike[val_idx]
     y_val = movie[val_idx]
 
+    strategy, is_tpu = _get_tpu_strategy()
+
     if init_model_path is None:
-        model = build_decoder_model(n_cell=spike.shape[1], resolution=movie.shape[1], learning_rate=learning_rate)
+        with strategy.scope():
+            model = build_decoder_model(n_cell=spike.shape[1], resolution=movie.shape[1], learning_rate=learning_rate)
     else:
-        model = load_model(init_model_path)
-        model.compile(optimizer=Adam(learning_rate=learning_rate), loss="mse")
+        with strategy.scope():
+            model = load_model(init_model_path)
+            model.compile(optimizer=Adam(learning_rate=learning_rate), loss="mse")
+
+    if is_tpu:
+        per_replica = batch_size // strategy.num_replicas_in_sync
+        batch_size = max(per_replica, 1) * strategy.num_replicas_in_sync
 
     best_path = os.path.join(output_dir, "best_model.keras")
     callbacks = [

@@ -1,6 +1,7 @@
 import argparse
 import os
 
+import tensorflow as tf
 from tf_keras.callbacks import EarlyStopping, ModelCheckpoint
 from tf_keras.layers import Input
 from tf_keras.optimizers import Adam
@@ -14,6 +15,21 @@ from encoding_common.pipeline import (
 )
 from LN.LN import LN
 from utils.metrics import keras_cc
+
+
+def _get_tpu_strategy():
+    """Detect and initialize TPU. Returns (strategy, is_tpu)."""
+    try:
+        resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu="local")
+        tf.config.experimental_connect_to_cluster(resolver)
+        tf.tpu.experimental.initialize_tpu_system(resolver)
+        strategy = tf.distribute.TPUStrategy(resolver)
+        print(f"Running on TPU: {resolver.master()}")
+        print(f"Number of replicas: {strategy.num_replicas_in_sync}")
+        return strategy, True
+    except (ValueError, RuntimeError) as e:
+        print(f"TPU initialization failed ({e}), falling back to CPU/GPU")
+        return tf.distribute.get_strategy(), False
 
 
 def train_LN(
@@ -52,13 +68,23 @@ def train_LN(
     y_train = spike[train_idx]
     y_val = spike[val_idx]
 
-    model = LN(
-        inputs=Input(shape=x_train.shape[1:]),
-        cell_num=y_train.shape[1],
-        activation=activation,
-        l2_reg=l2_reg,
-    )
-    model.compile(optimizer=Adam(learning_rate), loss="poisson", metrics=["mse", keras_cc])
+    strategy, is_tpu = _get_tpu_strategy()
+
+    with strategy.scope():
+        model = LN(
+            inputs=Input(shape=x_train.shape[1:]),
+            cell_num=y_train.shape[1],
+            activation=activation,
+            l2_reg=l2_reg,
+        )
+        model.compile(optimizer=Adam(learning_rate), loss="poisson", metrics=["mse", keras_cc])
+
+    if is_tpu:
+        per_replica_batch = batch_size // strategy.num_replicas_in_sync
+        if per_replica_batch < 1:
+            per_replica_batch = 1
+        batch_size = per_replica_batch * strategy.num_replicas_in_sync
+        print(f"TPU batch size: {per_replica_batch} per replica x {strategy.num_replicas_in_sync} replicas = {batch_size} effective")
 
     best_path = os.path.join(weight_dir, "LN_best.keras")
     callbacks = [

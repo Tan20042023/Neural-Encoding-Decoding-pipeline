@@ -1,6 +1,7 @@
 import argparse
 import os
 
+import tensorflow as tf
 import tf_keras
 from tf_keras.callbacks import EarlyStopping, ModelCheckpoint
 from tf_keras.layers import Input
@@ -13,6 +14,21 @@ from encoding_common.pipeline import (
     set_seed,
 )
 from SID.SID import AE, cal_performance, dense_decoder
+
+
+def _get_tpu_strategy():
+    """Detect and initialize TPU. Returns (strategy, is_tpu)."""
+    try:
+        resolver = tf.distribute.cluster_resolver.TPUClusterResolver(tpu="local")
+        tf.config.experimental_connect_to_cluster(resolver)
+        tf.tpu.experimental.initialize_tpu_system(resolver)
+        strategy = tf.distribute.TPUStrategy(resolver)
+        print(f"Running on TPU: {resolver.master()}")
+        print(f"Number of replicas: {strategy.num_replicas_in_sync}")
+        return strategy, True
+    except (ValueError, RuntimeError) as e:
+        print(f"TPU initialization failed ({e}), falling back to CPU/GPU")
+        return tf.distribute.get_strategy(), False
 
 
 def plot_training_history(history, save_path):
@@ -97,11 +113,21 @@ def train_SID(
     y_val = resize_movies(movie[val_idx], resolution)
     y_test = resize_movies(movie[test_idx], resolution)
 
-    end2end_model, multiout_model = build_sid_models(
-        ncell=x_train.shape[1],
-        resolution=resolution,
-        learning_rate=learning_rate,
-    )
+    strategy, is_tpu = _get_tpu_strategy()
+
+    with strategy.scope():
+        end2end_model, multiout_model = build_sid_models(
+            ncell=x_train.shape[1],
+            resolution=resolution,
+            learning_rate=learning_rate,
+        )
+
+    if is_tpu:
+        per_replica_batch = batch_size // strategy.num_replicas_in_sync
+        if per_replica_batch < 1:
+            per_replica_batch = 1
+        batch_size = per_replica_batch * strategy.num_replicas_in_sync
+        print(f"TPU batch size: {per_replica_batch} per replica x {strategy.num_replicas_in_sync} replicas = {batch_size} effective")
 
     checkpoint_path = os.path.join(weight_dir, "SID_best.keras")
     callbacks = [
