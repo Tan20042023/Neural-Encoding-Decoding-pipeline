@@ -1,0 +1,8 @@
+{
+    "baseline_cnn_mse": 0.011570424772799015,
+    "baseline_cnn_psnr": 19.905168533325195,
+    "baseline_cnn_ssim": 0.6402111649513245,
+    "regularized_cnn_mse": 0.00926560815423727,
+    "regularized_cnn_psnr": 20.596311569213867,
+    "regularized_cnn_ssim": 0.6718668937683105
+}

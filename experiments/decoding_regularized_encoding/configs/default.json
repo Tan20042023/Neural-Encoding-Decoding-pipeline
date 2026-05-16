@@ -2,7 +2,7 @@
   "global": {
     "output_root": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk",
     "data_path": "Dataset/allenSDK/session_721123822/movie1_trial1.mat",
-    "sid_model_path": "SID/weights/allensdk_22/movie1/SID_best.keras",
+    "sid_model_path": "SID/weights/allensdk/movie1/SID_best.keras",
     "seed": 42,
     "resolution": 64,
     "batch_size": 128,
@@ -10,6 +10,7 @@
     "test_split": 0.1
   },
   "baseline_cnn": {
+    "pretrained_path": "CNN/weights/allensdk_22/movie1/CNN_single_trial_best",
     "epochs": 500,
     "learning_rate": 0.001,
     "batch_size": 128,

@@ -1,0 +1,11 @@
+{
+    "encode_mse": 0.29796862602233887,
+    "encode_cc": 0.22887304425239563,
+    "decode_mse": 0.009260921739041805,
+    "decode_psnr": 20.597997665405273,
+    "decode_ssim": 0.6720200181007385,
+    "lambda_decode": 0.2,
+    "lambda_ssim": 0.0,
+    "sid_model_path": "SID/weights/allensdk/movie1/SID_best.keras",
+    "data_path": "Dataset/allenSDK/session_721123822/movie1_trial1.mat"
+}

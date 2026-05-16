@@ -1,0 +1,60 @@
+{
+    "generated_at": "2026-05-16T14:45:55.846036",
+    "mode": "all",
+    "global": {
+        "output_root": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk",
+        "data_path": "Dataset/allenSDK/session_721123822/movie1_trial1.mat",
+        "sid_model_path": "SID/weights/allensdk/movie1/SID_best.keras",
+        "seed": 42,
+        "resolution": 64,
+        "batch_size": 128,
+        "val_split": 0.1,
+        "test_split": 0.1
+    },
+    "baseline_cnn_metrics": {
+        "loss": 0.5386290550231934,
+        "mse": 0.2974556088447571,
+        "cc": 0.23142409324645996
+    },
+    "baseline_decode_metrics": {
+        "baseline_cnn_mse": 0.011570424772799015,
+        "baseline_cnn_psnr": 19.905168533325195,
+        "baseline_cnn_ssim": 0.6402111649513245
+    },
+    "regularized_decode_metrics": {
+        "regularized_cnn_mse": 0.00926560815423727,
+        "regularized_cnn_psnr": 20.596311569213867,
+        "regularized_cnn_ssim": 0.6718668937683105
+    },
+    "comparison": {
+        "mse_improvement_abs": 0.0023048166185617447,
+        "mse_improvement_pct": 19.919896320316198,
+        "psnr_improvement_abs": 0.6911430358886719,
+        "ssim_improvement_abs": 0.031655728816986084,
+        "checks": {
+            "regularized_mse_better": true,
+            "regularized_psnr_better": true,
+            "regularized_ssim_better": true
+        }
+    },
+    "artifacts": {
+        "base": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk",
+        "split_path": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/split_indices.npz",
+        "baseline_weight_dir": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/baseline_cnn/weights",
+        "baseline_result_dir": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/baseline_cnn/results",
+        "regularized_weight_dir": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/regularized_cnn/weights",
+        "regularized_result_dir": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/regularized_cnn/results",
+        "decode_compare_dir": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/decode_compare",
+        "baseline_model_path": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/baseline_cnn/weights/CNN_best.keras",
+        "regularized_model_path": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/regularized_cnn/weights/CNN_decoder_regularized_best.keras",
+        "baseline_predictions": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/baseline_cnn/results/predictions.mat",
+        "regularized_predictions": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/regularized_cnn/results/regularized_predictions.mat"
+    },
+    "regularized_cnn_metrics": {
+        "encode_mse": 0.29796862602233887,
+        "encode_cc": 0.22887304425239563,
+        "decode_mse": 0.009260921739041805,
+        "decode_psnr": 20.597997665405273,
+        "decode_ssim": 0.6720200181007385
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "mse_improvement_abs": 0.0023048166185617447,
+    "mse_improvement_pct": 19.919896320316198,
+    "psnr_improvement_abs": 0.6911430358886719,
+    "ssim_improvement_abs": 0.031655728816986084,
+    "checks": {
+        "regularized_mse_better": true,
+        "regularized_psnr_better": true,
+        "regularized_ssim_better": true
+    }
+}

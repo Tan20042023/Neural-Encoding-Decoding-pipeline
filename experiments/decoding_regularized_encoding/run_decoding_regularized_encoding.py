@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import shutil
 from datetime import datetime
 
 from CNN.CNN_pred import test_CNN
@@ -57,21 +58,29 @@ def run_pipeline(config, mode, skip_existing):
     baseline_cfg = config["baseline_cnn"]
     regularized_cfg = config["regularized_cnn"]
 
+    pretrained_baseline = baseline_cfg.get("pretrained_path")
     if run_train and (not skip_existing or not os.path.exists(paths["baseline_model_path"])):
-        train_CNN(
-            data_path=data_path,
-            weight_dir=paths["baseline_weight_dir"],
-            result_dir=paths["baseline_result_dir"],
-            batch_size=int(baseline_cfg.get("batch_size", batch_size)),
-            epochs=int(baseline_cfg.get("epochs", 500)),
-            learning_rate=float(baseline_cfg.get("learning_rate", 1e-3)),
-            resolution=resolution,
-            val_split=val_split,
-            test_split=test_split,
-            seed=seed,
-            split_path=paths["split_path"],
-            visualization=bool(baseline_cfg.get("visualization", True)),
-        )
+        if pretrained_baseline and os.path.exists(pretrained_baseline):
+            print(f"Loading pretrained baseline CNN from: {pretrained_baseline}")
+            shutil.copy2(pretrained_baseline, paths["baseline_model_path"])
+            print(f"Copied to: {paths['baseline_model_path']}")
+        else:
+            if pretrained_baseline:
+                print(f"Warning: pretrained_path '{pretrained_baseline}' not found, training from scratch.")
+            train_CNN(
+                data_path=data_path,
+                weight_dir=paths["baseline_weight_dir"],
+                result_dir=paths["baseline_result_dir"],
+                batch_size=int(baseline_cfg.get("batch_size", batch_size)),
+                epochs=int(baseline_cfg.get("epochs", 500)),
+                learning_rate=float(baseline_cfg.get("learning_rate", 1e-3)),
+                resolution=resolution,
+                val_split=val_split,
+                test_split=test_split,
+                seed=seed,
+                split_path=paths["split_path"],
+                visualization=bool(baseline_cfg.get("visualization", True)),
+            )
 
     regularized_train_output = None
     if run_train and (not skip_existing or not os.path.exists(paths["regularized_model_path"])):
@@ -163,11 +172,26 @@ def run_pipeline(config, mode, skip_existing):
     }
 
     save_json(os.path.join(paths["decode_compare_dir"], "comparison_table.json"), comparison)
+
+    regularized_cnn_metrics = None
+    reg_metrics_path = os.path.join(paths["regularized_result_dir"], "regularized_metrics.json")
+    if os.path.exists(reg_metrics_path):
+        with open(reg_metrics_path, "r", encoding="utf-8") as f:
+            reg_metrics = json.load(f)
+        regularized_cnn_metrics = {
+            "encode_mse": reg_metrics["encode_mse"],
+            "encode_cc": reg_metrics["encode_cc"],
+            "decode_mse": reg_metrics["decode_mse"],
+            "decode_psnr": reg_metrics["decode_psnr"],
+            "decode_ssim": reg_metrics["decode_ssim"],
+        }
+
     report = {
         "generated_at": datetime.now().isoformat(),
         "mode": mode,
         "global": global_cfg,
         "baseline_cnn_metrics": baseline_metrics,
+        "regularized_cnn_metrics": regularized_cnn_metrics,
         "baseline_decode_metrics": baseline_decode,
         "regularized_decode_metrics": regularized_decode,
         "comparison": comparison,

@@ -34,5 +34,3 @@ experiments/**/outputs/**/*.keras
 # Experiment results (negations must come AFTER the global patterns above)
 !experiments/**/outputs/**/*.json
 !experiments/**/outputs/**/*.png
-!experiments/**/outputs/**/*.npz
-!experiments/**/outputs/**/*.mat
