@@ -1,0 +1,32 @@
+{
+  "global": {
+    "output_root": "experiments\\noisy_spike_robustness\\outputs",
+    "seed": 42,
+    "resolution": 64,
+    "batch_size": 256
+  },
+  "cases": [
+    {
+      "name": "allensdk_movie1",
+      "enabled": true,
+      "sid_model_path": "SID\\weights\\allensdk_22\\movie1\\SID_best.keras",
+      "predictions_mat_path": "CNN\\results\\allensdk_22\\movie1\\predictions.mat",
+      "noises": {
+        "dropout": {
+          "enabled": true,
+          "levels": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+        },
+        "gaussian": {
+          "enabled": true,
+          "levels": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+        },
+        "poisson": {
+          "enabled": true,
+          "levels": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8],
+          "poisson_peak": 1.5
+        }
+      }
+    }
+  ]
+}
+

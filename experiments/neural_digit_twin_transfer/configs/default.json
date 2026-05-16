@@ -1,0 +1,25 @@
+{
+  "global": {
+    "movie1_path": "Dataset\\allenSDK\\session_721123822\\movie1.mat",
+    "movie3_path": "Dataset\\allenSDK\\session_721123822\\movie3.mat",
+    "output_root": "experiments\\neural_digit_twin_transfer\\outputs\\session_721123822\\movie3_to_movie1_transfer",
+    "movie1_real_ratio": 0.1,
+    "movie1_test_ratio": 0.2,
+    "resolution": 64,
+    "batch_size": 128,
+    "val_split": 0.1,
+    "seed": 42
+  },
+  "encoder": {
+    "epochs": 120,
+    "learning_rate": 0.001
+  },
+  "decoder": {
+    "epochs": 120,
+    "pretrain_epochs": 120,
+    "finetune_epochs": 80,
+    "learning_rate": 0.001,
+    "finetune_learning_rate": 0.0005
+  }
+}
+

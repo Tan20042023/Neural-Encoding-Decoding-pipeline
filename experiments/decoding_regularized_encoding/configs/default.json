@@ -1,0 +1,26 @@
+{
+  "global": {
+    "output_root": "experiments\\decoding_regularized_encoding\\outputs\\single_trial_allensdk",
+    "data_path": "Dataset\\allenSDK\\session_721123822\\single_trial\\movie1_trial1.mat",
+    "sid_model_path": "SID\\weights\\allensdk_22\\movie1\\SID_best.keras",
+    "seed": 42,
+    "resolution": 64,
+    "batch_size": 128,
+    "val_split": 0.1,
+    "test_split": 0.1
+  },
+  "baseline_cnn": {
+    "epochs": 500,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "visualization": true
+  },
+  "regularized_cnn": {
+    "epochs": 300,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "lambda_decode": 0.2,
+    "lambda_ssim": 0.0
+  }
+}
+

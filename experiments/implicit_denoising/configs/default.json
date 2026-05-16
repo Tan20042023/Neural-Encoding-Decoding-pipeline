@@ -1,0 +1,72 @@
+{
+  "global": {
+    "output_root": "experiments\\implicit_denoising\\outputs",
+    "seed": 42,
+    "resolution": 64,
+    "batch_size": 256,
+    "val_split": 0.1,
+    "test_split": 0.1,
+    "save_images": false,
+    "max_images": 20
+  },
+  "experiments": [
+    {
+      "name": "multi_trial_movie",
+      "dataset_type": "multi_trial",
+      "enabled": true,
+      "data_path": "Dataset\\movie\\movie01.mat",
+      "cnn_train": {
+        "epochs": 500,
+        "learning_rate": 0.001,
+        "batch_size": 256,
+        "visualization": true
+      },
+      "sid_train": {
+        "epochs": 30,
+        "num_iter": 20,
+        "learning_rate": 0.001,
+        "batch_size": 256,
+        "visualization": true
+      }
+    },
+    {
+      "name": "multi_trial_allensdk",
+      "dataset_type": "multi_trial",
+      "enabled": true,
+      "data_path": "Dataset\\allenSDK\\session_721123822\\movie1.mat",
+      "cnn_train": {
+        "epochs": 500,
+        "learning_rate": 0.001,
+        "batch_size": 256,
+        "visualization": true
+      },
+      "sid_train": {
+        "epochs": 30,
+        "num_iter": 20,
+        "learning_rate": 0.001,
+        "batch_size": 256,
+        "visualization": true
+      }
+    },
+    {
+      "name": "single_trial_allensdk",
+      "dataset_type": "single_trial",
+      "enabled": true,
+      "data_path": "Dataset\\allenSDK\\session_721123822\\single_trial\\movie1_trial1.mat",
+      "cnn_train": {
+        "epochs": 500,
+        "learning_rate": 0.001,
+        "batch_size": 256,
+        "visualization": true
+      },
+      "sid_train": {
+        "epochs": 30,
+        "num_iter": 20,
+        "learning_rate": 0.001,
+        "batch_size": 256,
+        "visualization": true
+      }
+    }
+  ]
+}
+
