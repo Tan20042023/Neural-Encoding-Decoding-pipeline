@@ -63,9 +63,9 @@ def test_LN(
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Evaluate LN encoding model")
-    parser.add_argument("--data-path", default=r"Dataset\movie\movie01.mat")
-    parser.add_argument("--model-path", default=r"LN\weights\movie\movie01\LN_best.keras")
-    parser.add_argument("--result-dir", default=r"LN\results\movie\movie01")
+    parser.add_argument("--data-path", default="Dataset/movie/movie01.mat")
+    parser.add_argument("--model-path", default="LN/weights/movie/movie01/LN_best.keras")
+    parser.add_argument("--result-dir", default="LN/results/movie/movie01")
     parser.add_argument("--split-path", default=None)
     parser.add_argument("--resolution", type=int, default=64)
     parser.add_argument("--batch-size", type=int, default=256)

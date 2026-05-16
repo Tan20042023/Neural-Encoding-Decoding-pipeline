@@ -135,7 +135,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run noisy spike robustness experiment")
     parser.add_argument(
         "--config",
-        default=r"experiments\noisy_spike_robustness\configs\default.json",
+        default="experiments/noisy_spike_robustness/configs/default.json",
         help="Path to JSON config",
     )
     return parser.parse_args()

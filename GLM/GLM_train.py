@@ -83,9 +83,9 @@ def train_GLM(
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train GLM encoding model")
-    parser.add_argument("--data-path", default=r"Dataset\allenSDK\session_721123822\movie1.mat")
-    parser.add_argument("--weight-dir", default=r"GLM\weights\allensdk_22\movie1")
-    parser.add_argument("--result-dir", default=r"GLM\results\allensdk_22\movie1")
+    parser.add_argument("--data-path", default="Dataset/allenSDK/session_721123822/movie1.mat")
+    parser.add_argument("--weight-dir", default="GLM/weights/allensdk_22/movie1")
+    parser.add_argument("--result-dir", default="GLM/results/allensdk_22/movie1")
     parser.add_argument("--split-path", default=None)
     parser.add_argument("--activation", default="softplus")
     parser.add_argument("--l2-reg", type=float, default=1e-3)

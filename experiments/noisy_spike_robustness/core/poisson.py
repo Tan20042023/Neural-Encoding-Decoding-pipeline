@@ -134,8 +134,8 @@ def run_experiment(
 
 
 if __name__ == "__main__":
-    sid_model_path = r"SID\weights\allensdk_22\movie1\SID_best.keras"
-    predictions_mat_path = r"CNN\results\allensdk_22\movie1\predictions.mat"
+    sid_model_path = "SID/weights/allensdk_22/movie1/SID_best.keras"
+    predictions_mat_path = "CNN/results/allensdk_22/movie1/predictions.mat"
 
     resolution = 64
     batch_size = 256

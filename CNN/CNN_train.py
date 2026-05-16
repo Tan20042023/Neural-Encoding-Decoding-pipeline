@@ -104,9 +104,9 @@ def train_CNN(
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train CNN encoding model")
-    parser.add_argument("--data-path", default=r"Dataset\movie\movie01.mat")
-    parser.add_argument("--weight-dir", default=r"CNN\weights\movie\movie01")
-    parser.add_argument("--result-dir", default=r"CNN\results\movie\movie01")
+    parser.add_argument("--data-path", default="Dataset/movie/movie01.mat")
+    parser.add_argument("--weight-dir", default="CNN/weights/movie/movie01")
+    parser.add_argument("--result-dir", default="CNN/results/movie/movie01")
     parser.add_argument("--split-path", default=None)
     parser.add_argument("--batch-size", type=int, default=256)
     parser.add_argument("--epochs", type=int, default=500)

@@ -126,8 +126,8 @@ def run_experiment(
 
 if __name__ == "__main__":
     # Interactive-style batch run: iterate dropout rates 0.1-0.8
-    sid_model_path = r"SID\weights\movie\movie01\SID_best.keras"
-    predictions_mat_path = r"CNN\results\movie\movie01\predictions.mat"
+    sid_model_path = "SID/weights/movie/movie01/SID_best.keras"
+    predictions_mat_path = "CNN/results/movie/movie01/predictions.mat"
 
     resolution = 64
     batch_size = 256

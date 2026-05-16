@@ -143,9 +143,9 @@ def train_SID(
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train SID decoding model")
-    parser.add_argument("--data-path", default=r"Dataset\movie\movie01.mat")
-    parser.add_argument("--weight-dir", default=r"SID\weights\movie\movie01")
-    parser.add_argument("--result-dir", default=r"SID\SID_results\movie\movie01")
+    parser.add_argument("--data-path", default="Dataset/movie/movie01.mat")
+    parser.add_argument("--weight-dir", default="SID/weights/movie/movie01")
+    parser.add_argument("--result-dir", default="SID/SID_results/movie/movie01")
     parser.add_argument("--split-path", default=None)
     parser.add_argument("--resolution", type=int, default=64)
     parser.add_argument("--batch-size", type=int, default=256)

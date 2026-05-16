@@ -265,7 +265,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run neural digit twin transfer experiment")
     parser.add_argument(
         "--config",
-        default=r"experiments\neural_digit_twin_transfer\configs\default.json",
+        default="experiments/neural_digit_twin_transfer/configs/default.json",
         help="Path to JSON config",
     )
     parser.add_argument("--mode", choices=["all", "train", "eval"], default="all")

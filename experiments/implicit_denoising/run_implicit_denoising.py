@@ -202,7 +202,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run implicit denoising experiment pipeline")
     parser.add_argument(
         "--config",
-        default=r"experiments\implicit_denoising\configs\default.json",
+        default="experiments/implicit_denoising/configs/default.json",
         help="Path to JSON config file",
     )
     parser.add_argument(

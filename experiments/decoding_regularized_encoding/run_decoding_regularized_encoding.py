@@ -181,7 +181,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run decoding-regularized encoding experiment")
     parser.add_argument(
         "--config",
-        default=r"experiments\decoding_regularized_encoding\configs\default.json",
+        default="experiments/decoding_regularized_encoding/configs/default.json",
         help="Path to JSON config file",
     )
     parser.add_argument("--mode", choices=["all", "train", "eval"], default="all")

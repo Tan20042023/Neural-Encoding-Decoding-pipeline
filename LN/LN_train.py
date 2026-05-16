@@ -82,9 +82,9 @@ def train_LN(
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train LN encoding model")
-    parser.add_argument("--data-path", default=r"Dataset\movie\movie01.mat")
-    parser.add_argument("--weight-dir", default=r"LN\weights\movie\movie01")
-    parser.add_argument("--result-dir", default=r"LN\results\movie\movie01")
+    parser.add_argument("--data-path", default="Dataset/movie/movie01.mat")
+    parser.add_argument("--weight-dir", default="LN/weights/movie/movie01")
+    parser.add_argument("--result-dir", default="LN/results/movie/movie01")
     parser.add_argument("--split-path", default=None)
     parser.add_argument("--activation", default="softplus")
     parser.add_argument("--l2-reg", type=float, default=1e-3)
