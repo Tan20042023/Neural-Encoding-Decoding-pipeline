@@ -1,0 +1,131 @@
+{
+    "generated_at": "2026-05-16T10:44:40.971729",
+    "mode": "all",
+    "skip_existing": true,
+    "global": {
+        "output_root": "experiments/implicit_denoising/outputs",
+        "seed": 42,
+        "resolution": 64,
+        "batch_size": 256,
+        "val_split": 0.1,
+        "test_split": 0.1,
+        "save_images": false,
+        "max_images": 20
+    },
+    "results": [
+        {
+            "name": "multi_trial_movie",
+            "dataset_type": "multi_trial",
+            "data_path": "Dataset/movie/movie01.mat",
+            "cnn_test_metrics": {
+                "loss": 0.17590753734111786,
+                "mse": 0.03168985992670059,
+                "cc": 0.7827118039131165
+            },
+            "sid_direct_metrics": {
+                "mse": 0.01019639428704977,
+                "psnr": 27.123458862304688,
+                "ssim": 0.488778680562973
+            },
+            "sid_from_cnn_pred_metrics": {
+                "mse": 0.010892394930124283,
+                "psnr": 27.286216735839844,
+                "ssim": 0.503375232219696
+            },
+            "comparison": {
+                "mse_improvement_abs": -0.0006960006430745125,
+                "mse_improvement_pct": -6.825948697947945,
+                "psnr_improvement_abs": 0.16275787353515625,
+                "ssim_improvement_abs": 0.014596551656723022
+            },
+            "artifacts": {
+                "base": "experiments/implicit_denoising/outputs/multi_trial_movie",
+                "split_path": "experiments/implicit_denoising/outputs/multi_trial_movie/split_indices.npz",
+                "cnn_weight_dir": "experiments/implicit_denoising/outputs/multi_trial_movie/cnn/weights",
+                "cnn_result_dir": "experiments/implicit_denoising/outputs/multi_trial_movie/cnn/results",
+                "sid_weight_dir": "experiments/implicit_denoising/outputs/multi_trial_movie/sid/weights",
+                "sid_result_dir": "experiments/implicit_denoising/outputs/multi_trial_movie/sid/results",
+                "comparison_dir": "experiments/implicit_denoising/outputs/multi_trial_movie/comparison",
+                "cnn_best_model": "experiments/implicit_denoising/outputs/multi_trial_movie/cnn/weights/CNN_best.keras",
+                "sid_best_model": "experiments/implicit_denoising/outputs/multi_trial_movie/sid/weights/SID_best.keras",
+                "cnn_predictions": "experiments/implicit_denoising/outputs/multi_trial_movie/cnn/results/predictions.mat"
+            }
+        },
+        {
+            "name": "multi_trial_allensdk",
+            "dataset_type": "multi_trial",
+            "data_path": "Dataset/allenSDK/session_721123822/movie1.mat",
+            "cnn_test_metrics": {
+                "loss": 0.546809732913971,
+                "mse": 0.022135626524686813,
+                "cc": 0.45911088585853577
+            },
+            "sid_direct_metrics": {
+                "mse": 0.008151380345225334,
+                "psnr": 21.12311363220215,
+                "ssim": 0.7263574600219727
+            },
+            "sid_from_cnn_pred_metrics": {
+                "mse": 0.007412516977638006,
+                "psnr": 21.46713638305664,
+                "ssim": 0.7461478114128113
+            },
+            "comparison": {
+                "mse_improvement_abs": 0.000738863367587328,
+                "mse_improvement_pct": 9.064272997886999,
+                "psnr_improvement_abs": 0.3440227508544922,
+                "ssim_improvement_abs": 0.019790351390838623
+            },
+            "artifacts": {
+                "base": "experiments/implicit_denoising/outputs/multi_trial_allensdk",
+                "split_path": "experiments/implicit_denoising/outputs/multi_trial_allensdk/split_indices.npz",
+                "cnn_weight_dir": "experiments/implicit_denoising/outputs/multi_trial_allensdk/cnn/weights",
+                "cnn_result_dir": "experiments/implicit_denoising/outputs/multi_trial_allensdk/cnn/results",
+                "sid_weight_dir": "experiments/implicit_denoising/outputs/multi_trial_allensdk/sid/weights",
+                "sid_result_dir": "experiments/implicit_denoising/outputs/multi_trial_allensdk/sid/results",
+                "comparison_dir": "experiments/implicit_denoising/outputs/multi_trial_allensdk/comparison",
+                "cnn_best_model": "experiments/implicit_denoising/outputs/multi_trial_allensdk/cnn/weights/CNN_best.keras",
+                "sid_best_model": "experiments/implicit_denoising/outputs/multi_trial_allensdk/sid/weights/SID_best.keras",
+                "cnn_predictions": "experiments/implicit_denoising/outputs/multi_trial_allensdk/cnn/results/predictions.mat"
+            }
+        },
+        {
+            "name": "single_trial_allensdk",
+            "dataset_type": "single_trial",
+            "data_path": "Dataset/allenSDK/session_721123822/movie1_trial1.mat",
+            "cnn_test_metrics": {
+                "loss": 0.5386290550231934,
+                "mse": 0.2974556088447571,
+                "cc": 0.23142409324645996
+            },
+            "sid_direct_metrics": {
+                "mse": 0.02999456413090229,
+                "psnr": 16.22833824157715,
+                "ssim": 0.413956880569458
+            },
+            "sid_from_cnn_pred_metrics": {
+                "mse": 0.011570424772799015,
+                "psnr": 19.905168533325195,
+                "ssim": 0.6402111649513245
+            },
+            "comparison": {
+                "mse_improvement_abs": 0.018424139358103275,
+                "mse_improvement_pct": 61.424927789237536,
+                "psnr_improvement_abs": 3.676830291748047,
+                "ssim_improvement_abs": 0.22625428438186646
+            },
+            "artifacts": {
+                "base": "experiments/implicit_denoising/outputs/single_trial_allensdk",
+                "split_path": "experiments/implicit_denoising/outputs/single_trial_allensdk/split_indices.npz",
+                "cnn_weight_dir": "experiments/implicit_denoising/outputs/single_trial_allensdk/cnn/weights",
+                "cnn_result_dir": "experiments/implicit_denoising/outputs/single_trial_allensdk/cnn/results",
+                "sid_weight_dir": "experiments/implicit_denoising/outputs/single_trial_allensdk/sid/weights",
+                "sid_result_dir": "experiments/implicit_denoising/outputs/single_trial_allensdk/sid/results",
+                "comparison_dir": "experiments/implicit_denoising/outputs/single_trial_allensdk/comparison",
+                "cnn_best_model": "experiments/implicit_denoising/outputs/single_trial_allensdk/cnn/weights/CNN_best.keras",
+                "sid_best_model": "experiments/implicit_denoising/outputs/single_trial_allensdk/sid/weights/SID_best.keras",
+                "cnn_predictions": "experiments/implicit_denoising/outputs/single_trial_allensdk/cnn/results/predictions.mat"
+            }
+        }
+    ]
+}

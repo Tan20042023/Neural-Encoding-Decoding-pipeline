@@ -1,6 +1,6 @@
 {
   "global": {
-    "output_root": "experiments\\implicit_denoising\\outputs",
+    "output_root": "experiments/implicit_denoising/outputs",
     "seed": 42,
     "resolution": 64,
     "batch_size": 256,
@@ -14,7 +14,9 @@
       "name": "multi_trial_movie",
       "dataset_type": "multi_trial",
       "enabled": true,
-      "data_path": "Dataset\\movie\\movie01.mat",
+      "data_path": "Dataset/movie/movie01.mat",
+      "pretrained_cnn_path": "CNN/weights/movie/movie01/CNN_best.keras",
+      "pretrained_sid_path": "SID/weights/movie/movie01/SID_best.keras",
       "cnn_train": {
         "epochs": 500,
         "learning_rate": 0.001,
@@ -33,7 +35,9 @@
       "name": "multi_trial_allensdk",
       "dataset_type": "multi_trial",
       "enabled": true,
-      "data_path": "Dataset\\allenSDK\\session_721123822\\movie1.mat",
+      "data_path": "Dataset/allenSDK/session_721123822/movie1.mat",
+      "pretrained_cnn_path": "CNN/weights/allenSDK/movie1/CNN_best.keras",
+      "pretrained_sid_path": "SID/weights/allenSDK/movie1/SID_best.keras",
       "cnn_train": {
         "epochs": 500,
         "learning_rate": 0.001,
@@ -52,7 +56,8 @@
       "name": "single_trial_allensdk",
       "dataset_type": "single_trial",
       "enabled": true,
-      "data_path": "Dataset\\allenSDK\\session_721123822\\single_trial\\movie1_trial1.mat",
+      "data_path": "Dataset/allenSDK/session_721123822/movie1_trial1.mat",
+      "pretrained_sid_path": "SID/weights/allenSDK/movie1/SID_best.keras",
       "cnn_train": {
         "epochs": 500,
         "learning_rate": 0.001,

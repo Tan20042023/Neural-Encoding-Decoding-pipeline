@@ -1,6 +1,6 @@
 {
   "global": {
-    "output_root": "experiments\\noisy_spike_robustness\\outputs",
+    "output_root": "experiments/noisy_spike_robustness/outputs",
     "seed": 42,
     "resolution": 64,
     "batch_size": 256
@@ -9,8 +9,8 @@
     {
       "name": "allensdk_movie1",
       "enabled": true,
-      "sid_model_path": "SID\\weights\\allensdk_22\\movie1\\SID_best.keras",
-      "predictions_mat_path": "CNN\\results\\allensdk_22\\movie1\\predictions.mat",
+      "sid_model_path": "SID/weights/allensdk_22/movie1/SID_best.keras",
+      "predictions_mat_path": "CNN/results/allensdk_22/movie1/predictions.mat",
       "noises": {
         "dropout": {
           "enabled": true,

@@ -11,12 +11,6 @@ LN/weights/
 SID/weights/
 
 # Prediction results and large files
-*.mat
-*.npz
-CNN/weights/
-GLM/weights/
-LN/weights/
-SID/weights/
 CNN/results/*.mat
 CNN/results/*.npz
 CNN/results/*.json
@@ -29,4 +23,16 @@ LN/results/*.json
 SID/results/*.mat
 SID/results/*.npz
 SID/results/*.json
-experiments/**/outputs/
+
+# Experiment outputs: track results, ignore model weights
+experiments/**/outputs/**/*.keras
+
+# Global patterns (overridden by experiment negations below)
+*.mat
+*.npz
+
+# Experiment results (negations must come AFTER the global patterns above)
+!experiments/**/outputs/**/*.json
+!experiments/**/outputs/**/*.png
+!experiments/**/outputs/**/*.npz
+!experiments/**/outputs/**/*.mat

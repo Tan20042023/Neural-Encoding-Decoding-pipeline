@@ -1,0 +1,5 @@
+{
+    "cnn_pred_decode_mse": 0.010892394930124283,
+    "cnn_pred_decode_psnr": 27.286216735839844,
+    "cnn_pred_decode_ssim": 0.503375232219696
+}

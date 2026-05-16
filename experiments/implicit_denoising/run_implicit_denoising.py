@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import shutil
 from datetime import datetime
 
 from CNN.CNN_pred import test_CNN
@@ -55,6 +56,21 @@ def run_single_experiment(exp_cfg, global_cfg, mode, skip_existing):
 
     cnn_best_exists = os.path.exists(paths["cnn_best_model"])
     sid_best_exists = os.path.exists(paths["sid_best_model"])
+
+    pretrained_cnn = exp_cfg.get("pretrained_cnn_path")
+    pretrained_sid = exp_cfg.get("pretrained_sid_path")
+
+    if not cnn_best_exists and pretrained_cnn and os.path.exists(pretrained_cnn):
+        os.makedirs(os.path.dirname(paths["cnn_best_model"]), exist_ok=True)
+        shutil.copy2(pretrained_cnn, paths["cnn_best_model"])
+        print(f"[{name}] Reused pretrained CNN from {pretrained_cnn}")
+        cnn_best_exists = True
+
+    if not sid_best_exists and pretrained_sid and os.path.exists(pretrained_sid):
+        os.makedirs(os.path.dirname(paths["sid_best_model"]), exist_ok=True)
+        shutil.copy2(pretrained_sid, paths["sid_best_model"])
+        print(f"[{name}] Reused pretrained SID from {pretrained_sid}")
+        sid_best_exists = True
 
     if run_train and (not skip_existing or not cnn_best_exists):
         train_CNN(
