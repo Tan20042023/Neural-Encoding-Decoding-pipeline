@@ -1,9 +1,9 @@
 import os
 
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import Input
-from keras.models import Model, load_model
-from keras.optimizers import Adam
+from tf_keras.callbacks import EarlyStopping, ModelCheckpoint
+from tf_keras.layers import Input
+from tf_keras.models import Model, load_model
+from tf_keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 
 from CNN.CNN import CNN

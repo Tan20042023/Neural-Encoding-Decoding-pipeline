@@ -1,6 +1,6 @@
-from tensorflow.keras.layers import Activation, Dense, Flatten
-from tensorflow.keras.models import Model
-from tensorflow.keras.regularizers import l2
+from tf_keras.layers import Activation, Dense, Flatten
+from tf_keras.models import Model
+from tf_keras.regularizers import l2
 
 
 def LN(inputs, cell_num, activation="softplus", l2_reg=1e-3): #retina:1e-4 cortex:1e-3

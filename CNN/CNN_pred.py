@@ -1,7 +1,7 @@
 import argparse
 import os
 
-from keras.models import load_model
+from tf_keras.models import load_model
 
 from encoding_common.pipeline import (
     create_or_load_split_indices,

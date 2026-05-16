@@ -1,6 +1,6 @@
-from tensorflow.keras.layers import Activation, Conv2D, Dense, Flatten, GaussianNoise
-from tensorflow.keras.models import Model
-from tensorflow.keras.regularizers import l2
+from tf_keras.layers import Activation, Conv2D, Dense, Flatten, GaussianNoise
+from tf_keras.models import Model
+from tf_keras.regularizers import l2
 
 
 def CNN(inputs, n_out):

@@ -1,7 +1,7 @@
 numpy
 scipy
 tensorflow
-keras
+tf_keras
 scikit-learn
 matplotlib
 

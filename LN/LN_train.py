@@ -1,9 +1,9 @@
 import argparse
 import os
 
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import Input
-from keras.optimizers import Adam
+from tf_keras.callbacks import EarlyStopping, ModelCheckpoint
+from tf_keras.layers import Input
+from tf_keras.optimizers import Adam
 
 from encoding_common.pipeline import (
     create_or_load_split_indices,

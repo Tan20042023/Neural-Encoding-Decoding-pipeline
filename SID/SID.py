@@ -1,5 +1,5 @@
 import numpy as np
-from keras.layers import (
+from tf_keras.layers import (
     Activation,
     BatchNormalization,
     Conv2D,
@@ -8,7 +8,7 @@ from keras.layers import (
     Reshape,
     UpSampling2D,
 )
-from keras.models import Sequential
+from tf_keras.models import Sequential
 from skimage.metrics import mean_squared_error, peak_signal_noise_ratio, structural_similarity
 
 

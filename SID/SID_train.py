@@ -1,10 +1,10 @@
 import argparse
 import os
 
-import keras
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.layers import Input
-from keras.models import Model
+import tf_keras
+from tf_keras.callbacks import EarlyStopping, ModelCheckpoint
+from tf_keras.layers import Input
+from tf_keras.models import Model
 
 from encoding_common.pipeline import (
     create_or_load_split_indices,
@@ -54,7 +54,7 @@ def build_sid_models(ncell, resolution, learning_rate):
     ae_out = model_ae(dense_out)
 
     end2end_model = Model(input_x, ae_out, name="SID_end2end")
-    end2end_model.compile(loss="mse", optimizer=keras.optimizers.Adam(learning_rate=learning_rate))
+    end2end_model.compile(loss="mse", optimizer=tf_keras.optimizers.Adam(learning_rate=learning_rate))
 
     multiout_model = Model(input_x, [dense_out, ae_out], name="SID_multiout")
     return end2end_model, multiout_model

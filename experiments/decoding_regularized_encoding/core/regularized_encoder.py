@@ -4,10 +4,11 @@ import os
 import numpy as np
 import scipy.io
 import tensorflow as tf
-from keras.callbacks import EarlyStopping
-from keras.layers import Input
-from keras.models import load_model
-from keras.optimizers import Adam
+import tf_keras
+from tf_keras.callbacks import EarlyStopping
+from tf_keras.layers import Input
+from tf_keras.models import load_model
+from tf_keras.optimizers import Adam
 
 from CNN.CNN import CNN
 from SID.SID import cal_performance
@@ -41,7 +42,7 @@ def load_single_trial_data(data_path):
     return movie, spike
 
 
-class DecoderRegularizedEncoder(tf.keras.Model):
+class DecoderRegularizedEncoder(tf_keras.Model):
     def __init__(self, encoder, decoder, lambda_decode=0.2, lambda_ssim=0.0):
         super().__init__()
         self.encoder = encoder
@@ -49,11 +50,11 @@ class DecoderRegularizedEncoder(tf.keras.Model):
         self.lambda_decode = lambda_decode
         self.lambda_ssim = lambda_ssim
 
-        self.total_loss_tracker = tf.keras.metrics.Mean(name="total_loss")
-        self.encode_loss_tracker = tf.keras.metrics.Mean(name="encode_loss")
-        self.decode_mse_tracker = tf.keras.metrics.Mean(name="decode_mse")
-        self.decode_ssim_tracker = tf.keras.metrics.Mean(name="decode_ssim")
-        self.cc_tracker = tf.keras.metrics.Mean(name="keras_cc")
+        self.total_loss_tracker = tf_keras.metrics.Mean(name="total_loss")
+        self.encode_loss_tracker = tf_keras.metrics.Mean(name="encode_loss")
+        self.decode_mse_tracker = tf_keras.metrics.Mean(name="decode_mse")
+        self.decode_ssim_tracker = tf_keras.metrics.Mean(name="decode_ssim")
+        self.cc_tracker = tf_keras.metrics.Mean(name="keras_cc")
 
     @property
     def metrics(self):
@@ -72,8 +73,8 @@ class DecoderRegularizedEncoder(tf.keras.Model):
         pred_spike = self.encoder(movie_input, training=training)
         pred_movie = self.decoder(pred_spike, training=False)
 
-        encode_loss = tf.reduce_mean(tf.keras.losses.poisson(spike_target, pred_spike))
-        decode_mse = tf.reduce_mean(tf.keras.losses.mse(movie_target, pred_movie))
+        encode_loss = tf.reduce_mean(tf_keras.losses.poisson(spike_target, pred_spike))
+        decode_mse = tf.reduce_mean(tf_keras.losses.mse(movie_target, pred_movie))
         decode_ssim = 1.0 - tf.reduce_mean(tf.image.ssim(movie_target, pred_movie, max_val=1.0))
 
         total_loss = encode_loss + self.lambda_decode * decode_mse + self.lambda_ssim * decode_ssim

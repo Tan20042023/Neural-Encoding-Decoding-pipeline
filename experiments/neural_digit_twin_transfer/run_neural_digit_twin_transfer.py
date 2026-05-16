@@ -6,7 +6,7 @@ from datetime import datetime
 import numpy as np
 import scipy.io
 import tensorflow as tf
-from keras.models import load_model
+from tf_keras.models import load_model
 
 from encoding_common.pipeline import save_json
 from experiments.neural_digit_twin_transfer.core.data import (

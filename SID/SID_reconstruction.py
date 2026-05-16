@@ -1,7 +1,7 @@
 import argparse
 import os
 
-from keras.models import load_model
+from tf_keras.models import load_model
 from matplotlib import pyplot as plt
 
 from encoding_common.pipeline import (

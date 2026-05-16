@@ -1,6 +1,6 @@
-from keras.regularizers import l2
-from tensorflow.keras.layers import Activation, Add, Dense, Flatten, Input
-from tensorflow.keras.models import Model
+from tf_keras.layers import Activation, Add, Dense, Flatten, Input
+from tf_keras.models import Model
+from tf_keras.regularizers import l2
 
 
 def GLM(filter_shape, history_shape, activation="softplus", l2_reg=1e-3):   #retina:1e-4 cortex:1e-3
