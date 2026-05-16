@@ -12,7 +12,21 @@ SID/weights/
 
 # Prediction results and large files
 *.mat
-CNN/results/
-GLM/results/
-LN/results/
-SID/results/
+*.npz
+CNN/weights/
+GLM/weights/
+LN/weights/
+SID/weights/
+CNN/results/*.mat
+CNN/results/*.npz
+CNN/results/*.json
+GLM/results/*.mat
+GLM/results/*.npz
+GLM/results/*.json
+LN/results/*.mat
+LN/results/*.npz
+LN/results/*.json
+SID/results/*.mat
+SID/results/*.npz
+SID/results/*.json
+experiments/**/outputs/
