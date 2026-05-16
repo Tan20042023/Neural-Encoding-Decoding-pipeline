@@ -28,7 +28,7 @@ This project implements and compares multiple encoding models (LN, GLM, CNN) tha
 
 The dataset and pretrained model weights are hosted on Google Drive due to file size limitations.
 
-**Download link:** [Google Drive](YOUR_GOOGLE_DRIVE_LINK_HERE)
+**Download link:** [Google Drive](https://drive.google.com/drive/folders/1PwT9dmvmI2T3dxHGSP2VAOUqdyouwyh1?usp=drive_link)
 
 After downloading, place the files so that the directory structure looks like:
 

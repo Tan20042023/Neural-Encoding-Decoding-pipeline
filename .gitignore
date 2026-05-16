@@ -3,17 +3,16 @@
 __pycache__/
 *.pyc
 
-# Large data files (hosted on Google Drive, see README)
+# Large data files and model weights (hosted on Google Drive, see README)
 Dataset/
-
-# Model weights (hosted on Google Drive, see README)
 CNN/weights/
 GLM/weights/
 LN/weights/
 SID/weights/
 
-# Large prediction results
-CNN/results/allensdk_22/
-GLM/results/allensdk/
-LN/results/allensdk/
+# Prediction results and large files
+*.mat
+CNN/results/
+GLM/results/
+LN/results/
 SID/results/
