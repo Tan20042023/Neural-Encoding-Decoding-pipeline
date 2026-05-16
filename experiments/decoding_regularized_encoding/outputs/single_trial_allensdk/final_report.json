@@ -16,6 +16,13 @@
         "mse": 0.2974556088447571,
         "cc": 0.23142409324645996
     },
+    "regularized_cnn_metrics": {
+        "encode_mse": 0.29796862602233887,
+        "encode_cc": 0.22887304425239563,
+        "decode_mse": 0.009260921739041805,
+        "decode_psnr": 20.597997665405273,
+        "decode_ssim": 0.6720200181007385
+    },
     "baseline_decode_metrics": {
         "baseline_cnn_mse": 0.011570424772799015,
         "baseline_cnn_psnr": 19.905168533325195,
@@ -49,12 +56,5 @@
         "regularized_model_path": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/regularized_cnn/weights/CNN_decoder_regularized_best.keras",
         "baseline_predictions": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/baseline_cnn/results/predictions.mat",
         "regularized_predictions": "experiments/decoding_regularized_encoding/outputs/single_trial_allensdk/regularized_cnn/results/regularized_predictions.mat"
-    },
-    "regularized_cnn_metrics": {
-        "encode_mse": 0.29796862602233887,
-        "encode_cc": 0.22887304425239563,
-        "decode_mse": 0.009260921739041805,
-        "decode_psnr": 20.597997665405273,
-        "decode_ssim": 0.6720200181007385
     }
 }

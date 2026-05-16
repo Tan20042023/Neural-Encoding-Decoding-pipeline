@@ -1,0 +1,4 @@
+{
+    "model_name": "group3_finetune_decoder",
+    "init_model_path": "experiments/neural_digit_twin_transfer/outputs/session_721123822/movie3_to_movie1_transfer/group3_pretrain/best_model.keras"
+}
