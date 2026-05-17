@@ -1,38 +1,59 @@
 # Neural Digit Twin Transfer Experiment
 
-本实验对应论文中的解码迁移部分，目标是在 `movie3` 与少量 `movie1` 真实标注上训练编码器生成伪脉冲，再比较 3 组解码训练策略在 `movie1 test` 上的表现。
+[中文](README_ZH.md)
 
-## 目录
+## Motivation
 
-- `run_neural_digit_twin_transfer.py`：实验总控入口
-- `core/data.py`：数据加载、resize、split 复用
-- `core/models.py`：encoder / decoder 训练与评估
-- `configs/default.json`：默认配置
-- `outputs/`：实验产物（建议不入库）
+Decoding tasks reconstruct images from spikes. Obviously, a decoder cannot produce valid images if it has never seen data from the same or similar distribution as the target. Therefore, the decoder should be exposed to as diverse data as possible during training. However, spike data is scarce and expensive to collect. Meanwhile, encoders require less training data and exhibit better cross-domain generalization.
 
-## 运行
+Our approach: train a lightweight encoder on limited data to synthesize "pseudo-spike" data, expanding the decoder's training set and improving cross-domain transfer decoding performance.
+
+Framework diagram: `Picture/model/transfer.pdf`
+
+## Experiment Design
+
+Three groups of decoders are trained and compared on movie1 test data:
+
+| Group | Training Data | Strategy |
+|-------|--------------|----------|
+| **Group 1** | movie3 only | Baseline |
+| **Group 2** | movie3 + movie1 real | Direct combination |
+| **Group 3** | movie3 + pseudo-spike → finetune on movie1 real | Pretrain then finetune |
+
+Expected result: Group 3 > Group 2 > Group 1
+
+## Structure
+
+- `run_neural_digit_twin_transfer.py`: Main entry point
+- `core/data.py`: Data loading, resize, split utilities
+- `core/models.py`: Encoder/decoder training and evaluation
+- `configs/default.json`: Default configuration
+- `outputs/`: Experiment outputs
+
+## Usage
 
 ```bash
-python experiments\neural_digit_twin_transfer\run_neural_digit_twin_transfer.py --config experiments\neural_digit_twin_transfer\configs\default.json --mode all
+python experiments/neural_digit_twin_transfer/run_neural_digit_twin_transfer.py \
+    --config experiments/neural_digit_twin_transfer/configs/default.json \
+    --mode all
 ```
 
-可选：
+Options:
 
-- `--mode train`：仅训练
-- `--mode eval`：仅评估（需已有模型）
-- `--skip-existing`：若模型已存在则跳过训练
+- `--mode train`: Train only
+- `--mode eval`: Evaluate only (requires existing models)
+- `--skip-existing`: Skip training if model already exists
 
-## 输出
+## Outputs
 
-默认输出目录：`experiments\neural_digit_twin_transfer\outputs\session_721123822\movie3_to_movie1_transfer`
+Default output directory: `experiments/neural_digit_twin_transfer/outputs/session_721123822/movie3_to_movie1_transfer`
 
-关键文件：
+Key files:
 
-- `split_indices.npz`：movie1 real / unlabeled / test 划分索引
-- `split_info.json`：划分摘要
-- `pseudo_spike.mat`：movie1 unlabeled 的伪 spike
-- `group1_movie3_only\metrics.json`
-- `group2_movie3_plus_movie1_real\metrics.json`
-- `group3_finetune\metrics.json`
-- `final_report.json`：三组汇总、排序与 `3>2>1` 检查
-
+- `split_indices.npz`: movie1 real / unlabeled / test split indices
+- `split_info.json`: Split summary
+- `pseudo_spike.mat`: Pseudo spikes for movie1 unlabeled data
+- `group1_movie3_only/metrics.json`
+- `group2_movie3_plus_movie1_real/metrics.json`
+- `group3_finetune/metrics.json`
+- `final_report.json`: Summary, ranking, and `3>2>1` validation

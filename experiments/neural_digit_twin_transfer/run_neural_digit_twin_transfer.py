@@ -251,7 +251,6 @@ def run_pipeline(config, mode, skip_existing):
         "generated_at": datetime.now().isoformat(),
         "mode": mode,
         "global": global_cfg,
-        "split": split_info,
         "group_metrics": group_metrics,
         "ranking": ranking,
         "expected_order_checks": checks,
