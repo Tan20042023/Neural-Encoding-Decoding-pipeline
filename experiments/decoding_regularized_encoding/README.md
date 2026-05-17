@@ -1,38 +1,47 @@
 # Decoding-Regularized Encoding Experiment
 
-本实验验证：在编码器训练中引入解码约束后，`pred_spike` 经 SID 解码的重建指标优于普通 CNN 编码器。
+[中文](README_ZH.md)
 
-## 对照设置
+## Motivation
 
-- **Baseline**：普通 CNN 编码器（movie -> spike）
-- **Regularized**：解码损失正则化编码器（冻结 SID，引入 decode loss）
-- 两者使用同一数据、同一 split、同一 SID 解码器。
+Framework diagram: `Picture/model/joint_training.pdf`
 
-## 目录
+The idea is to add a decoder after the encoding model and introduce decoding loss into encoder training. The goal is to improve decoding metrics of predicted spikes while maintaining the encoder's own correlation coefficient.
 
-- `configs/default.json`：实验配置
-- `core/regularized_encoder.py`：正则化编码器训练
-- `run_decoding_regularized_encoding.py`：总控脚本
-- `outputs/`：实验产物
+Tested on allensdk single-trial data: decoding metrics improved slightly compared to baseline, while encoding metrics decreased slightly. Overall effect was not significant.
 
-## 运行
+## Control Setup
+
+- **Baseline**: Standard CNN encoder (movie → spike)
+- **Regularized**: Decoding-loss regularized encoder (frozen SID, with decode loss)
+- Both use the same data, same split, and same SID decoder.
+
+## Structure
+
+- `configs/default.json`: Experiment configuration
+- `core/regularized_encoder.py`: Regularized encoder training
+- `run_decoding_regularized_encoding.py`: Main script
+- `outputs/`: Experiment outputs
+
+## Usage
 
 ```bash
-python experiments\decoding_regularized_encoding\run_decoding_regularized_encoding.py --config experiments\decoding_regularized_encoding\configs\default.json --mode all
+python experiments/decoding_regularized_encoding/run_decoding_regularized_encoding.py \
+    --config experiments/decoding_regularized_encoding/configs/default.json \
+    --mode all
 ```
 
-可选：
+Options:
 
-- `--mode train`：仅训练
-- `--mode eval`：仅评估（需已有模型）
-- `--skip-existing`：若模型已存在则跳过训练
+- `--mode train`: Train only
+- `--mode eval`: Evaluate only (requires existing models)
+- `--skip-existing`: Skip training if model already exists
 
-## 输出
+## Outputs
 
-在 `outputs/<case>/` 下生成：
+Generated under `outputs/<case>/`:
 
-- `baseline_cnn/`：Baseline 编码器模型与预测
-- `regularized_cnn/`：Regularized 编码器模型与预测
-- `decode_compare/comparison_table.json`：核心对照结果
-- `final_report.json`：完整报告与结论检查
-
+- `baseline_cnn/`: Baseline encoder model and predictions
+- `regularized_cnn/`: Regularized encoder model and predictions
+- `decode_compare/comparison_table.json`: Key comparison results
+- `final_report.json`: Full report with conclusion check
